@@ -36,6 +36,7 @@ public class ClassesExcelParser extends ExcelParserImpl<TrainingPair> {
         Pair<Date, Date> classSegment = parseDate(row);
         trainingPair.setStartDate(classSegment.getFirst());
         trainingPair.setEndDate(classSegment.getSecond());
+        trainingPair.setUpdateDate(new Date());
 
         return trainingPair;
     }

@@ -12,8 +12,7 @@ public class ScheduledUpdater {
     @Autowired
     private UpdateServiceImpl updateService;
 
-
-    @Scheduled(fixedRate = 500000000)
+    @Scheduled(fixedRateString = "${app.scheduled.time}")
     public void update() {
         updateService.update();
     }

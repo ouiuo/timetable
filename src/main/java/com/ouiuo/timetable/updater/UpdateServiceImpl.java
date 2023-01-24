@@ -14,7 +14,9 @@ import java.util.List;
 @Service
 public class UpdateServiceImpl implements UpdateService {
 
-    private static final String FILE_URL = "https://rsue.ru/studentam/raspisanie-zaochnaya-forma/doc/3/%D0%9F%D0%9C%D0%98OZ-311.xlsx";
+//    private static final String FILE_URL = "https://rsue.ru/studentam/raspisanie-zaochnaya-forma/doc/3/%D0%9F%D0%9C%D0%98OZ-311.xlsx";
+    private static final String FILE_URL = "https://rsue.ru/studentam/raspisanie-zaochnaya-forma/doc/3/ПМИOZ-311.xlsx";
+
     @Autowired
     private ExcelParser rowMapper;
 
@@ -27,6 +29,9 @@ public class UpdateServiceImpl implements UpdateService {
     public void update() {
         BufferedInputStream in = new BufferedInputStream(new URL(FILE_URL).openStream());
         List<TrainingPair> parse = rowMapper.parse(in);
+        if (parse.size() > 0) {
+            classesRepository.deleteAll();
+        }
         classesRepository.saveAll(parse);
     }
 }

@@ -21,4 +21,5 @@ public class TrainingPair {
     private String classType;
     private Date startDate;
     private Date endDate;
+    private Date updateDate;
 }
