@@ -1,2 +1,2 @@
 docker-compose down
-docker rmi timetable:latest
+docker rmi -f $(docker images ouiuo/timetable -a -q)

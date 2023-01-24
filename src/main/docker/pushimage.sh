@@ -1,1 +1,1 @@
-docker push ouiuo/timetable:0.6
+docker push ouiuo/timetable:0.8
