@@ -1,5 +1,5 @@
 package com.ouiuo.timetable.updater;
 
-public interface UpdateService {
+public interface TimetableUpdateService {
     void update();
 }

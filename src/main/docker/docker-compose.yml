@@ -8,11 +8,12 @@ services:
     depends_on:
       - postgres
     environment:
-      - APP_SCHEDULED_TIME=3600000
+      - APP_SCHEDULED_TIMETABLE_TIME=3600000
+      - APP_SCHEDULED_GROUPS_TIME=0 0 1 * * 1
       - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/timetable
       - SPRING_DATASOURCE_USERNAME=app
       - SPRING_DATASOURCE_PASSWORD=veryha1337rdpass
-      - SPRING_JPA_HIBERNATE_DDL_AUTO=create
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
   app2:
     image: timetable-bot:latest
     container_name: app2
@@ -33,5 +34,8 @@ services:
       POSTGRES_DB: "timetable"
       POSTGRES_USER: "app"
       POSTGRES_PASSWORD: "veryha1337rdpass"
+      PGDATA: "/var/lib/postgresql/data/pgdata"
+    volumes:
+      - /var/lib/postgresql/timetable:/var/lib/postgresql/data
     ports:
       - "5432:5432"
