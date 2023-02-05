@@ -24,7 +24,7 @@ services:
       - SPRING_DATASOURCE_USERNAME=app
       - SPRING_DATASOURCE_PASSWORD=veryha1337rdpass
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
-      - TELEGRAM_TOKEN=
+      - TELEGRAM_TOKEN=5985520973:AAHK_YUQc70bYFDl6_VpqwslQLMpfZ-ifRQ
     ports:
       - "8080:8080"
       - "80:80"

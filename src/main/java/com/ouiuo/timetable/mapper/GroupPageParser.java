@@ -14,7 +14,6 @@ import java.util.stream.Stream;
 public class GroupPageParser implements PageParser<Group> {
     @Override
     public List<Group> parse(Document document) {
-        List<Group> groups = new ArrayList<>();
         Stream<Group> groupStream = document.getElementsByAttributeValueStarting("href", "doc/").stream()
                 .map(element -> {
                     String groupNameNumber = element.childNode(0).attr("#text");

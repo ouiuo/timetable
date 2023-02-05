@@ -1,49 +1,52 @@
 package com.ouiuo.timetable.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.transaction.NotSupportedException;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.apache.commons.math3.util.Pair;
 
+import java.util.UUID;
+
 @Data
+@NoArgsConstructor
 @Entity(name = "groups")
+@Table(name = "groups", uniqueConstraints = {@UniqueConstraint(columnNames = {"group_name", "group_number", "is_practicum"})})
 public class Group {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-
+    private UUID id;
+    @Column(name = "group_name", length = 50)
     private String groupName;
 
-    private Long groupNumber;
+    @Column(name = "group_number")
+    private Integer groupNumber;
 
+    @Column(length = 100)
     private String url;
 
+    @Column(name = "is_practicum")
     private boolean isPracticum;
+
+    //todo this is doing two things. have to refactor
     public Group(String groupNameNumber, String url) throws NotSupportedException {
-        Pair<String, Long> pair = parseNameNumber(groupNameNumber);
+        Pair<String, Integer> pair = parseNameNumber(groupNameNumber);
         this.groupName = pair.getFirst();
         this.groupNumber = pair.getSecond();
         this.url = url;
         this.isPracticum = url.contains("pract");
     }
 
-    public Group() {
-
-    }
-
-    public static Pair<String, Long> parseNameNumber(String groupNameNumber) throws NotSupportedException {
+    public static Pair<String, Integer> parseNameNumber(String groupNameNumber) throws NotSupportedException {
         String[] groupNameOrNumber = groupNameNumber.split("-");
         String name = "";
-        Long number = 0L;
+        int number = 0;
         try {
             try {
-                number = Long.parseLong(groupNameOrNumber[0].replaceAll("\\s", ""));
+                number = Integer.parseInt(groupNameOrNumber[0].replaceAll("\\s", ""));
                 name = groupNameOrNumber[1];
             } catch (NumberFormatException e) {
-                number = Long.parseLong(groupNameOrNumber[1].replaceAll("\\s", ""));
+                number = Integer.parseInt(groupNameOrNumber[1].replaceAll("\\s", ""));
                 name = groupNameOrNumber[0];
             }
         } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
