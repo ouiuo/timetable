@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.BufferedInputStream;
 import java.net.URL;
+import java.net.URLConnection;
 import java.util.List;
 
 @Service
@@ -34,7 +35,11 @@ public class TimetableUpdateServiceImpl implements TimetableUpdateService {
     @Override
     @SneakyThrows
     public void update() {
-        BufferedInputStream in = new BufferedInputStream(new URL(FILE_URL).openStream());
+        URL url = new URL(FILE_URL);
+        URLConnection urlConnection = url.openConnection();
+        urlConnection.addRequestProperty("User-Agent",
+                "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)");
+        BufferedInputStream in = new BufferedInputStream(urlConnection.getInputStream());
         List<TrainingPair> parse = rowMapper.parse(in);
         if (parse.size() > 0) {
             classesRepository.deleteAll();
