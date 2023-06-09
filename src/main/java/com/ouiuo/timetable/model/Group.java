@@ -22,6 +22,7 @@ public class Group {
     private String url;
 
     private boolean isPracticum;
+
     public Group(String groupNameNumber, String url) throws NotSupportedException {
         Pair<String, Long> pair = parseNameNumber(groupNameNumber);
         this.groupName = pair.getFirst();

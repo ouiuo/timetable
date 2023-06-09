@@ -24,7 +24,6 @@ public class ScheduledUpdater {
 
 
     @EventListener(ApplicationReadyEvent.class)
-    @Scheduled(fixedRateString = "${app.scheduled.groups.time}")
     public void updateGroups() {
         groupUpdateService.update();
     }
