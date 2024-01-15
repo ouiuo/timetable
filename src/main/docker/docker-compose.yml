@@ -14,12 +14,17 @@ services:
       - SPRING_DATASOURCE_USERNAME=app
       - SPRING_DATASOURCE_PASSWORD=veryha1337rdpass
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - SERVER_PORT=8081
+    ports:
+      - "8081:8081"
   app2:
     image: timetable-bot:latest
     container_name: app2
     depends_on:
       - app
     environment:
+      - APP_TIMETABLE_URL=http://localhost:8081/timetable/api/
+      - APP_EXTERNAL_SYSTEM_READ_TIMEOUT=30000
       - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/timetable
       - SPRING_DATASOURCE_USERNAME=app
       - SPRING_DATASOURCE_PASSWORD=veryha1337rdpass

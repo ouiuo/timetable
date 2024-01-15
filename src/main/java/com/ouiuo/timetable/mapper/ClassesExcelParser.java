@@ -4,6 +4,7 @@ import com.ouiuo.timetable.model.Group;
 import com.ouiuo.timetable.model.TrainingPair;
 import org.apache.commons.math3.util.Pair;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.springframework.stereotype.Component;
 
 import java.time.Year;
@@ -19,6 +20,7 @@ public class ClassesExcelParser extends ExcelParserImpl<TrainingPair> {
     public ClassesExcelParser() {
         super(15);
     }
+
     @Override
     public boolean isBreakRow(Row row) {
         String st = row.getCell(0).getStringCellValue();
@@ -44,11 +46,23 @@ public class ClassesExcelParser extends ExcelParserImpl<TrainingPair> {
     }
 
     private Pair<Date, Date> parseDate(Row row) {
-        List<Integer> dayMounth = Arrays.stream(row.getCell(0).getStringCellValue().split("\\.")).map(s -> Integer.valueOf(s.substring(0, 2))).toList();
+        List<CellRangeAddress> mergedRegions = row.getSheet().getMergedRegions();
+        Row rowForParseData = row;
+        for (CellRangeAddress cellAddresses : mergedRegions) {
+            if (cellAddresses.isInRange(row.getCell(4))) {
+                rowForParseData = row.getSheet().getRow(cellAddresses.getFirstRow());
+            }
+        }
+        List<Integer> dayMounth = Arrays.stream(row.getCell(0)
+                        .getStringCellValue()
+                        .split("\\."))
+                .map(s -> Integer.valueOf(s.substring(0, 2))).toList();
+
+
         int year = Year.now().getValue();
         int mounth = dayMounth.get(1) - 1;
         int day = dayMounth.get(0);
-        List<Integer> integers = Arrays.stream(row.getCell(4).getStringCellValue().split("-"))
+        List<Integer> integers = Arrays.stream(rowForParseData.getCell(4).getStringCellValue().split("-"))
                 .flatMap(Pattern.compile("\\.")::splitAsStream)
                 .map(Integer::valueOf).toList();
         Date startDate = new GregorianCalendar(year, mounth, day, integers.get(0), integers.get(1)).getTime();
