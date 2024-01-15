@@ -3,14 +3,15 @@ package com.ouiuo.timetable.model;
 import jakarta.persistence.*;
 import jakarta.transaction.NotSupportedException;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.apache.commons.math3.util.Pair;
 
 import java.util.UUID;
 
-@Data
 @NoArgsConstructor
 @Entity(name = "groups")
+@Getter
 @Table(name = "groups", uniqueConstraints = {@UniqueConstraint(columnNames = {"group_name", "group_number", "is_practicum"})})
 public class Group {
     @Id
@@ -56,4 +57,25 @@ public class Group {
         return new Pair<>(name, number);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Group)) return false;
+
+        Group group = (Group) o;
+
+        if (isPracticum != group.isPracticum) return false;
+        if (groupName != null ? !groupName.equals(group.groupName) : group.groupName != null) return false;
+        if (groupNumber != null ? !groupNumber.equals(group.groupNumber) : group.groupNumber != null) return false;
+        return url != null ? url.equals(group.url) : group.url == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = groupName != null ? groupName.hashCode() : 0;
+        result = 31 * result + (groupNumber != null ? groupNumber.hashCode() : 0);
+        result = 31 * result + (url != null ? url.hashCode() : 0);
+        result = 31 * result + (isPracticum ? 1 : 0);
+        return result;
+    }
 }

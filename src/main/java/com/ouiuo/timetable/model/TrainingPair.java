@@ -1,9 +1,6 @@
 package com.ouiuo.timetable.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.Date;
@@ -17,6 +14,11 @@ public class TrainingPair {
     private String className;
     private String lectureName;
     private String addressName;
+
+    @ManyToOne
+    @JoinColumn(name = "group_id", nullable = false)
+    private Group group;
+
     //todo change string to ??
     private String classType;
     private Date startDate;

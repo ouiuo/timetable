@@ -1,5 +1,6 @@
 package com.ouiuo.timetable.mapper;
 
+import com.ouiuo.timetable.model.Group;
 import com.ouiuo.timetable.model.TrainingPair;
 import org.apache.commons.math3.util.Pair;
 import org.apache.poi.ss.usermodel.Row;
@@ -25,7 +26,7 @@ public class ClassesExcelParser extends ExcelParserImpl<TrainingPair> {
     }
 
     @Override
-    public TrainingPair map(Row row) {
+    public TrainingPair map(Row row, Group group) {
         TrainingPair trainingPair = new TrainingPair();
 
         trainingPair.setClassName(row.getCell(1).getStringCellValue());
@@ -37,6 +38,7 @@ public class ClassesExcelParser extends ExcelParserImpl<TrainingPair> {
         trainingPair.setStartDate(classSegment.getFirst());
         trainingPair.setEndDate(classSegment.getSecond());
         trainingPair.setUpdateDate(new Date());
+        trainingPair.setGroup(group);
 
         return trainingPair;
     }

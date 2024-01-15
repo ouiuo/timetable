@@ -1,10 +1,13 @@
 package com.ouiuo.timetable.dao;
 
 import com.ouiuo.timetable.model.TrainingPair;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-@Repository
-public interface ClassesRepository extends JpaRepository<TrainingPair, Long> {
+import java.util.UUID;
 
+@Repository
+public interface ClassesRepository extends CrudRepository<TrainingPair, Long> {
+
+    void deleteByGroupId(UUID groupId);
 }

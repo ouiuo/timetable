@@ -16,7 +16,7 @@ public class User {
     private Integer numbers;
 
     @ManyToOne
-    @JoinColumn(name = "group_id", nullable = false)
+    @JoinColumn(name = "group_id", nullable = true)
     private Group group;
 
     public void updateLast() {

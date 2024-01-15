@@ -1,7 +1,8 @@
 docker-compose down
-cd /home/vazya/Downloads/timetable-bot/src/main/docker
-sh /home/vazya/Downloads/timetable-bot/src/main/docker/updateimage.sh
 
-cd /home/vazya/Downloads/timetable/src/main/docker
-sh /home/vazya/Downloads/timetable/src/main/docker/updateimage.sh
+cd /c/Java\ projects/timetable-bot/src/main/docker/
+sh /c/Java\ projects/timetable-bot/src/main/docker/updateimage.sh
+
+cd /c/Java\ projects/timetable/src/main/docker/
+sh /c/Java\ projects/timetable/src/main/docker/updateimage.sh
 docker-compose up
